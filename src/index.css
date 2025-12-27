@@ -70,11 +70,26 @@ body {
   }
 }
 
-/* Responsive text wrapping for typewriter */
+/* Responsive text wrapping for typewriter - prevent overflow */
+.typewriter-text {
+  box-sizing: border-box;
+}
+
+@media (max-width: 640px) {
+  .typewriter-text {
+    max-width: calc(100vw - 4rem) !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .typewriter-text {
+    max-width: calc(100vw - 3rem) !important;
+  }
+}
+
 @media (max-width: 375px) {
   .typewriter-text {
-    font-size: 0.875rem !important;
-    max-width: 100% !important;
+    max-width: calc(100vw - 2.5rem) !important;
   }
 }
 
