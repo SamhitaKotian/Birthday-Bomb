@@ -1,18 +1,50 @@
-// Fetch movies from TMDB API via Vercel serverless function
+// Fetch movies from TMDB API directly (with API key from environment)
+// Using CORS proxy for client-side access
 export const fetchMoviesByMood = async (mood) => {
+  // Map moods to TMDB genre IDs
+  const moodToGenre = {
+    happy: 35,      // Comedy
+    sad: 18,        // Drama
+    excited: 28,    // Action
+    relaxed: 99,    // Documentary
+    romantic: 10749 // Romance
+  }
+
+  const genreId = moodToGenre[mood] || 35
+  const TMDB_API_KEY = import.meta.env.VITE_TMDB_API_KEY
+
+  // If no API key, use mock data
+  if (!TMDB_API_KEY) {
+    console.log('No TMDB API key found, using mock data')
+    return getMockMovies(mood)
+  }
+
   try {
-    // Get the base URL (works for both localhost and production)
-    const baseUrl = import.meta.env.PROD 
-      ? window.location.origin 
-      : window.location.origin // Use same origin for API routes
+    // Call TMDB API directly with CORS proxy
+    // Using a public CORS proxy to avoid CORS issues
+    const proxyUrl = 'https://api.allorigins.win/raw?url='
+    const tmdbUrl = `https://api.themoviedb.org/3/discover/movie?api_key=${TMDB_API_KEY}&with_genres=${genreId}&sort_by=popularity.desc&page=1&language=en-US`
     
-    const response = await fetch(`${baseUrl}/api/movies?mood=${mood}`)
+    const response = await fetch(`${proxyUrl}${encodeURIComponent(tmdbUrl)}`)
     
     if (!response.ok) {
       throw new Error('Failed to fetch movies')
     }
     
-    const movies = await response.json()
+    const data = await response.json()
+    
+    // Transform TMDB data to our format
+    const movies = data.results.slice(0, 6).map((movie) => ({
+      id: movie.id,
+      title: movie.title,
+      year: new Date(movie.release_date).getFullYear(),
+      poster: movie.poster_path 
+        ? `https://image.tmdb.org/t/p/w200${movie.poster_path}`
+        : '🎬',
+      overview: movie.overview,
+      rating: movie.vote_average,
+    }))
+    
     return movies
   } catch (error) {
     console.error('Error fetching movies:', error)
