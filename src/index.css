@@ -128,6 +128,17 @@ body {
   }
 }
 
+@keyframes waveformBar {
+  0%, 100% {
+    transform: scaleY(0.3);
+    opacity: 0.6;
+  }
+  50% {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+}
+
 @keyframes breathe {
   0%, 100% {
     transform: scale(1);
