@@ -1,17 +1,27 @@
-// TMDB Proxy - Replace with your actual API endpoint
+// Fetch movies from TMDB API via Vercel serverless function
 export const fetchMoviesByMood = async (mood) => {
-  const moods = {
-    happy: 'comedy',
-    sad: 'drama',
-    excited: 'action',
-    relaxed: 'documentary',
-    romantic: 'romance',
+  try {
+    // Get the base URL (works for both localhost and production)
+    const baseUrl = import.meta.env.PROD 
+      ? window.location.origin 
+      : window.location.origin // Use same origin for API routes
+    
+    const response = await fetch(`${baseUrl}/api/movies?mood=${mood}`)
+    
+    if (!response.ok) {
+      throw new Error('Failed to fetch movies')
+    }
+    
+    const movies = await response.json()
+    return movies
+  } catch (error) {
+    console.error('Error fetching movies:', error)
+    // Fallback to mock data if API fails
+    return getMockMovies(mood)
   }
-  
-  const genre = moods[mood] || 'comedy'
-  
-  // In production, this would call your backend proxy
-  // For now, return mock data
+}
+
+function getMockMovies(mood) {
   const mockMovies = {
     happy: [
       { id: 1, title: 'The Grand Budapest Hotel', poster: '🎬', year: 2014 },
@@ -35,9 +45,6 @@ export const fetchMoviesByMood = async (mood) => {
       { id: 11, title: 'La La Land', poster: '🎵', year: 2016 },
     ],
   }
-  
-  return new Promise((resolve) => {
-    setTimeout(() => resolve(mockMovies[mood] || mockMovies.happy), 500)
-  })
+  return mockMovies[mood] || mockMovies.happy
 }
 

@@ -57,9 +57,21 @@ export default function MoodMovie() {
                 animation: `fadeInStagger 0.5s ease-out ${index * 0.1}s both`,
               }}
             >
-              <div className="text-3xl mb-2">{movie.poster}</div>
+              {movie.poster.startsWith('http') ? (
+                <img 
+                  src={movie.poster} 
+                  alt={movie.title}
+                  className="w-full h-48 object-cover rounded-card mb-2"
+                  loading="lazy"
+                />
+              ) : (
+                <div className="text-3xl mb-2 text-center">{movie.poster}</div>
+              )}
               <h3 className="font-heading text-lg mb-1">{movie.title}</h3>
               <p className="text-sm text-neutral/60">{movie.year}</p>
+              {movie.rating && (
+                <p className="text-xs text-secondary mt-1">⭐ {movie.rating.toFixed(1)}/10</p>
+              )}
             </div>
           ))}
         </div>
