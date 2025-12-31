@@ -70,26 +70,43 @@ body {
   }
 }
 
-/* Responsive text wrapping for typewriter - prevent overflow */
-.typewriter-text {
-  box-sizing: border-box;
-}
-
-@media (max-width: 640px) {
-  .typewriter-text {
-    max-width: calc(100vw - 4rem) !important;
+@keyframes typewriter-mobile {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
   }
 }
 
+/* Responsive text wrapping for typewriter - prevent overflow */
+.typewriter-text,
+.typewriter-text-mobile {
+  box-sizing: border-box;
+}
+
+/* Mobile-specific constraints - force max-width */
+.typewriter-text-mobile {
+  max-width: calc(100vw - 3rem) !important;
+}
+
 @media (max-width: 480px) {
-  .typewriter-text {
-    max-width: calc(100vw - 3rem) !important;
+  .typewriter-text-mobile {
+    max-width: calc(100vw - 2.5rem) !important;
   }
 }
 
 @media (max-width: 375px) {
-  .typewriter-text {
-    max-width: calc(100vw - 2.5rem) !important;
+  .typewriter-text-mobile {
+    max-width: calc(100vw - 2rem) !important;
+    font-size: 0.875rem !important;
+  }
+}
+
+/* Override animation width on mobile */
+@media (max-width: 640px) {
+  .typewriter-text-mobile[style*="animation"] {
+    max-width: calc(100vw - 3rem) !important;
   }
 }
 
