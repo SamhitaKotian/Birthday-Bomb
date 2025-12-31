@@ -1,62 +1,72 @@
-import { useState } from 'react'
-
 const cocktails = [
   {
-    name: 'Wasabi Margarita',
-    ingredients: ['Tequila', 'Lime', 'Wasabi', 'Agave'],
-    emoji: '🌶️',
+    flavor: 'Fruity',
+    ingredient: 'Plum',
+    spirit: 'Mezcal',
   },
   {
-    name: 'Lychee Chilli',
-    ingredients: ['Vodka', 'Lychee', 'Chilli', 'Lime'],
-    emoji: '🌶️',
+    flavor: 'Smoky',
+    ingredient: 'Grilled shishito peppers',
+    spirit: 'Mezcal',
   },
   {
-    name: 'Tropical Sunset',
-    ingredients: ['Rum', 'Pineapple', 'Coconut', 'Grenadine'],
-    emoji: '🌴',
+    flavor: 'Herbal',
+    ingredient: 'Pickle brine',
+    spirit: 'Vodka',
+  },
+  {
+    flavor: 'Funky',
+    ingredient: 'Kimchi brine',
+    spirit: 'Vodka',
+  },
+  {
+    flavor: 'Briny',
+    ingredient: 'Oyster Liquor',
+    spirit: 'Gin',
+  },
+  {
+    flavor: 'Umami',
+    ingredient: 'Fish sauce',
+    spirit: 'vodka',
+  },
+  {
+    flavor: 'Spicy',
+    ingredient: 'Horseradish cream',
+    spirit: 'Tequila',
+  },
+  {
+    flavor: 'Sour',
+    ingredient: 'Bacon fat',
+    spirit: 'Rye',
+  },
+  {
+    flavor: 'Sweet',
+    ingredient: 'Glazed donut syrup',
+    spirit: 'Bourbon',
+  },
+  {
+    flavor: 'Toasted',
+    ingredient: 'Torched meringue',
+    spirit: 'Mezcal',
   },
 ]
 
 export default function CocktailPicker() {
-  const [selected, setSelected] = useState(null)
-
   return (
     <div className="space-y-6">
       <h2 className="text-3xl font-heading text-primary mb-4">Cocktail Picker 🍹</h2>
       
-      <div className="space-y-4">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         {cocktails.map((cocktail, index) => (
           <div
-            key={cocktail.name}
-            className="bg-white rounded-card p-4 cursor-pointer hover:scale-105 transition-all duration-300 ease-out shadow-hover"
-            onClick={() => setSelected(selected === index ? null : index)}
+            key={index}
+            className="bg-white rounded-card p-4 hover:scale-105 transition-all duration-300 ease-out shadow-hover"
           >
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <div className="text-3xl">{cocktail.emoji}</div>
-                <div>
-                  <h3 className="font-heading text-lg">{cocktail.name}</h3>
-                </div>
-              </div>
-              <div className="text-2xl">{selected === index ? '▼' : '▶'}</div>
-            </div>
-            
-            {selected === index && (
-              <div className="mt-4 space-y-2">
-                {cocktail.ingredients.map((ingredient, i) => (
-                  <div
-                    key={ingredient}
-                    className="bg-gradient-to-r from-primary/20 to-secondary/20 rounded-card p-2 text-sm font-body"
-                    style={{
-                      animation: `fadeInStagger 0.3s ease-out ${i * 0.1}s both`,
-                    }}
-                  >
-                    {ingredient}
-                  </div>
-                ))}
-              </div>
-            )}
+            <div className="font-heading text-xl mb-3">{cocktail.flavor}</div>
+            <ul className="space-y-2">
+              <li className="text-sm text-neutral/70">• {cocktail.ingredient}</li>
+              <li className="text-sm text-neutral/70">• {cocktail.spirit}</li>
+            </ul>
           </div>
         ))}
       </div>
