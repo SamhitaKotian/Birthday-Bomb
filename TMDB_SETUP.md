@@ -62,3 +62,7 @@ For local development, you have two options:
 - **Still seeing mock data?** Make sure you redeployed after adding the environment variable
 - **API errors?** The app will automatically fall back to mock data if the API fails
 
+
+
+
+
