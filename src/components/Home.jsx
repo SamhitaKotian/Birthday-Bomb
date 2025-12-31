@@ -5,7 +5,6 @@ import TileGrid from './TileGrid'
 import MoodMovie from './MoodMovie'
 import SongOfTheDay from './SongOfTheDay'
 import StressReliever from './StressReliever'
-import Masti2min from './2minMasti'
 import CafePicker from './CafePicker'
 import CocktailPicker from './CocktailPicker'
 import MOSWhiteNoise from './MOSWhiteNoise'
@@ -32,7 +31,6 @@ export default function Home() {
     { id: 'music', component: SongOfTheDay, title: 'Song of the Day', icon: '🎵' },
     { id: 'cafe', component: CafePicker, title: 'Cafe Picker', icon: '☕' },
     { id: 'breath', component: StressReliever, title: 'Breathe', icon: '🌬️' },
-    { id: 'puzzle', component: Masti2min, title: '2 Min Masti', icon: '🧩' },
     { id: 'cocktail', component: CocktailPicker, title: 'Cocktail', icon: '🍹' },
     { id: 'noise', component: MOSWhiteNoise, title: 'White Noise', icon: '🌊' },
     { id: 'quotes', component: MotivateActivate, title: 'Motivate', icon: '💪' },
