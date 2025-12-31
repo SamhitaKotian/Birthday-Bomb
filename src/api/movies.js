@@ -13,16 +13,9 @@ export const fetchMoviesByMood = async (mood) => {
   const genreId = moodToGenre[mood] || 35
   
   // Debug: Check all environment variables
-  console.log('🔍 Environment Debug:')
-  console.log('import.meta.env:', import.meta.env)
-  console.log('VITE_TMDB_API_KEY:', import.meta.env.VITE_TMDB_API_KEY)
-  console.log('All VITE_ vars:', Object.keys(import.meta.env).filter(key => key.startsWith('VITE_')))
   
   const TMDB_API_KEY = import.meta.env.VITE_TMDB_API_KEY
 
-  console.log('Fetching movies for mood:', mood, 'Genre ID:', genreId)
-  console.log('API Key present:', !!TMDB_API_KEY)
-  console.log('API Key length:', TMDB_API_KEY ? TMDB_API_KEY.length : 0)
 
   // If no API key, use mock data
   if (!TMDB_API_KEY) {
