@@ -1,7 +1,7 @@
 // Vercel Serverless Function - TMDB API Proxy
-// This file should be in /api/movies.js (not /src/api/movies.js)
+// This file is in /api/movies.js for Vercel serverless functions
 
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
   // Enable CORS
   res.setHeader('Access-Control-Allow-Credentials', true)
   res.setHeader('Access-Control-Allow-Origin', '*')
