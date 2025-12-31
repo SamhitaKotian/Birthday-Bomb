@@ -35,7 +35,7 @@ export default function Home() {
     { id: 'noise', component: MOSWhiteNoise, title: 'MOS White Noise', icon: '🌊' },
     { id: 'quotes', component: MotivateActivate, title: 'Motivate', icon: '💪' },
     { id: 'treat', component: TreatYoself, title: 'Treat Yourself', icon: '🛍️' },
-    { id: 'recipe', component: RecipeKinks, title: 'Recipe', icon: '👨‍🍳' },
+    { id: 'recipe', component: RecipeKinks, title: 'Recipe Inspo', icon: '👨‍🍳' },
   ]
 
   const handleTileClick = (tileId) => {

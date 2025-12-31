@@ -2,31 +2,98 @@ import { useState } from 'react'
 
 const recipes = [
   {
-    name: 'Chocolate Lava Cake',
-    mainIngredient: 'Dark Chocolate',
-    ingredients: ['200g dark chocolate', '100g butter', '3 eggs', '50g sugar', '30g flour'],
-    emoji: '🍫',
+    name: 'Honey garlic chicken',
+    time: '12 mins',
+    steps: [
+      'Cube thighs',
+      'stir-fry w with garlic, soy, honey 8 mins',
+      'add sesame seeds'
+    ],
   },
   {
-    name: 'Avocado Toast Deluxe',
-    mainIngredient: 'Avocado',
-    ingredients: ['2 avocados', 'Sourdough bread', 'Cherry tomatoes', 'Feta cheese', 'Lemon'],
-    emoji: '🥑',
+    name: 'Kimchi fried rice',
+    time: '10 mins',
+    steps: [
+      'Leftover rice + kimchi, egg, spam'
+    ],
   },
   {
-    name: 'Matcha Latte',
-    mainIngredient: 'Matcha Powder',
-    ingredients: ['2 tsp matcha', '200ml milk', 'Honey', 'Ice'],
-    emoji: '🍵',
+    name: 'Garlic shrimp zucchini boats',
+    time: '15 mins',
+    steps: [
+      'Sauté shrimp/garlic 4 mins',
+      'stuff zucchini halves',
+      'bake 10 mins'
+    ],
+  },
+  {
+    name: 'Caprese quesadilla',
+    time: '8 mins',
+    steps: [
+      'Layer mozzarella, tomato, basil in tortilla',
+      'pan-fry 4 mins per side, balsamic drizzle'
+    ],
+  },
+  {
+    name: 'Miso edamame hummus bowl',
+    time: '20 mins',
+    steps: [
+      'Blend edamame, hummus, miso',
+      'microwave 2 mins',
+      'eat with cucumber/pita'
+    ],
+  },
+  {
+    name: 'Chickpea smash salad',
+    time: '12 mins',
+    steps: [
+      'Rinse chickpeas',
+      'smash with olive oil, lemon, feta',
+      'scoop with crackers'
+    ],
+  },
+  {
+    name: 'Yogurt bark bites',
+    time: '20 mins',
+    steps: [
+      'Spread yogurt on plate',
+      'top berries, nuts, chia',
+      'freeze 20 mins (break & eat)'
+    ],
+  },
+  {
+    name: 'Sesame cold noodles',
+    time: '10 mins',
+    steps: [
+      'Boil instant noodles 3 mins',
+      'toss sesame oil, soy, vinegar, cucumber'
+    ],
+  },
+  {
+    name: 'Mapo tofu solo',
+    time: '15 mins',
+    steps: [
+      'Silken tofu + chili bean paste/ground pork in pan 10 mins',
+      'sesame sprinkle'
+    ],
+  },
+  {
+    name: 'Aloo Methi',
+    time: '25 mins',
+    steps: [
+      'Potatoes, fenugreek, chili',
+      'Dice potatoes',
+      'sauté methi 3 mins',
+      'add potatoes/spices simmer 8 mins'
+    ],
   },
 ]
 
 export default function RecipeKinks() {
-  const [selected, setSelected] = useState(null)
-  const [ingredientOpen, setIngredientOpen] = useState({})
+  const [flipped, setFlipped] = useState({})
 
-  const handleIngredientClick = (recipeName) => {
-    setIngredientOpen(prev => ({
+  const handleFlip = (recipeName) => {
+    setFlipped(prev => ({
       ...prev,
       [recipeName]: !prev[recipeName]
     }))
@@ -34,53 +101,49 @@ export default function RecipeKinks() {
 
   return (
     <div className="space-y-6">
-      <h2 className="text-3xl font-heading text-primary mb-4">Recipe Kinks 👨‍🍳</h2>
+      <h2 className="text-3xl font-heading text-primary mb-4">Recipe Inspo 👨‍🍳</h2>
       
-      <div className="space-y-4">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         {recipes.map((recipe) => (
           <div
             key={recipe.name}
-            className="bg-white rounded-card p-4 hover:scale-105 transition-all duration-300 ease-out shadow-hover"
+            className="relative h-56 cursor-pointer"
+            onClick={() => handleFlip(recipe.name)}
+            style={{
+              perspective: '1000px',
+            }}
           >
-            <div className="flex items-center justify-between mb-4">
-              <div className="flex items-center gap-3">
-                <div className="text-3xl">{recipe.emoji}</div>
-                <div>
-                  <h3 className="font-heading text-lg">{recipe.name}</h3>
+            <div
+              className="absolute inset-0 bg-white rounded-card p-4 shadow-hover transition-transform duration-500"
+              style={{
+                transformStyle: 'preserve-3d',
+                transform: flipped[recipe.name] ? 'rotateY(180deg)' : 'rotateY(0deg)',
+              }}
+            >
+              <div className="absolute inset-0 flex flex-col items-center justify-center backface-hidden p-4">
+                <div className="text-4xl mb-2">👨‍🍳</div>
+                <div className="font-heading text-lg text-center mb-2">{recipe.name}</div>
+                <div className="text-sm text-neutral/60">({recipe.time})</div>
+                <div className="text-xs text-neutral/40 mt-3">Tap to flip</div>
+              </div>
+              <div 
+                className="absolute inset-0 flex flex-col items-center justify-center backface-hidden p-4"
+                style={{
+                  transform: 'rotateY(180deg)',
+                }}
+              >
+                <div className="text-3xl mb-2">📝</div>
+                <div className="font-heading text-lg text-center mb-3">{recipe.name}</div>
+                <div className="text-sm text-neutral/60 space-y-1 text-left w-full">
+                  {recipe.steps.map((step, index) => (
+                    <div key={index} className="flex items-start">
+                      <span className="mr-2">•</span>
+                      <span>{step}</span>
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>
-            
-            <div
-              className="bg-gradient-to-r from-primary/20 to-secondary/20 rounded-card p-4 cursor-pointer mb-2"
-              onClick={() => handleIngredientClick(recipe.name)}
-              style={{
-                animation: ingredientOpen[recipe.name] ? 'popOpen 0.5s ease-out' : 'none',
-                transform: ingredientOpen[recipe.name] ? 'scale(1.05)' : 'scale(1)',
-              }}
-            >
-              <div className="text-center">
-                <div className="text-2xl mb-2">⭐</div>
-                <div className="font-heading">{recipe.mainIngredient}</div>
-                <div className="text-xs text-neutral/60 mt-1">Tap to see all ingredients</div>
-              </div>
-            </div>
-
-            {ingredientOpen[recipe.name] && (
-              <div className="mt-4 space-y-2">
-                {recipe.ingredients.map((ingredient, i) => (
-                  <div
-                    key={ingredient}
-                    className="bg-background rounded-card p-2 text-sm font-body"
-                    style={{
-                      animation: `fadeInStagger 0.3s ease-out ${i * 0.1}s both`,
-                    }}
-                  >
-                    {ingredient}
-                  </div>
-                ))}
-              </div>
-            )}
           </div>
         ))}
       </div>
