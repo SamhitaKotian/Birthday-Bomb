@@ -32,7 +32,7 @@ export default function Home() {
     { id: 'cafe', component: CafePicker, title: 'Cafe Picker', icon: '☕' },
     { id: 'breath', component: StressReliever, title: 'Breathe', icon: '🌬️' },
     { id: 'cocktail', component: CocktailPicker, title: 'Cocktail', icon: '🍹' },
-    { id: 'noise', component: MOSWhiteNoise, title: 'White Noise', icon: '🌊' },
+    { id: 'noise', component: MOSWhiteNoise, title: 'MOS White Noise', icon: '🌊' },
     { id: 'quotes', component: MotivateActivate, title: 'Motivate', icon: '💪' },
     { id: 'treat', component: TreatYoself, title: 'Treat Yourself', icon: '🛍️' },
     { id: 'recipe', component: RecipeKinks, title: 'Recipe', icon: '👨‍🍳' },
@@ -76,7 +76,7 @@ export default function Home() {
           {/* QR Code Link */}
           <Link
             to="/qr"
-            className="fixed top-4 right-4 z-50 bg-primary text-white px-6 py-3 rounded-card font-heading text-lg hover:scale-105 transition-all duration-300 ease-out shadow-hover hover:shadow-glow no-print"
+            className="fixed top-4 right-4 z-50 bg-primary text-white px-3 py-1.5 rounded-card font-heading text-sm hover:scale-105 transition-all duration-300 ease-out shadow-hover hover:shadow-glow no-print"
             style={{
               animation: 'fadeInStagger 0.5s ease-out 0.3s both',
             }}

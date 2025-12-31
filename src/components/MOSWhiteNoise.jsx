@@ -1,61 +1,66 @@
 import { useState } from 'react'
 
-const noiseTypes = [
-  { id: 'rain', label: 'Rain', emoji: '🌧️', color: 'from-blue-400/30 to-blue-600/30' },
-  { id: 'ocean', label: 'Ocean', emoji: '🌊', color: 'from-cyan-400/30 to-cyan-600/30' },
-  { id: 'forest', label: 'Forest', emoji: '🌲', color: 'from-green-400/30 to-green-600/30' },
-  { id: 'fire', label: 'Fireplace', emoji: '🔥', color: 'from-orange-400/30 to-red-600/30' },
+const episodes = [
+  { number: 47, title: 'This Friday got us crying' },
+  { number: 3, title: 'Hot girls hate working' },
+  { number: 51, title: 'Why are we all failing as adults?' },
+  { number: 81, title: 'Pros and Cons of Marriage' },
+  { number: 73, title: 'How to be a girl\'s girl' },
+  { number: 44, title: 'Is our underwear hookup friendly' },
+  { number: 22, title: 'We can\'t make everyone happy' },
+  { number: 12, title: 'Delhi vs Mumbai' },
+  { number: 48, title: '90\'s kids grew up with the worst TV shows' },
+  { number: 108, title: 'A MOS for things that broke us' },
 ]
 
 export default function MOSWhiteNoise() {
-  const [active, setActive] = useState(null)
-  const [isPlaying, setIsPlaying] = useState(false)
+  const [flippedCards, setFlippedCards] = useState(new Set())
+
+  const handleCardClick = (episodeNumber) => {
+    setFlippedCards((prev) => {
+      const newSet = new Set(prev)
+      if (newSet.has(episodeNumber)) {
+        newSet.delete(episodeNumber)
+      } else {
+        newSet.add(episodeNumber)
+      }
+      return newSet
+    })
+  }
 
   return (
     <div className="space-y-6">
-      <h2 className="text-3xl font-heading text-primary mb-4">White Noise 🌊</h2>
+      <h2 className="text-3xl font-heading text-primary mb-6">MOS White Noise</h2>
       
-      <div className="grid grid-cols-2 gap-4 mb-6">
-        {noiseTypes.map((noise) => (
-          <button
-            key={noise.id}
-            onClick={() => {
-              setActive(noise.id)
-              setIsPlaying(!isPlaying || active !== noise.id)
-            }}
-            className={`p-6 rounded-card bg-white hover:scale-105 transition-all duration-300 ease-out shadow-hover ${
-              active === noise.id && isPlaying ? 'ring-4 ring-secondary' : ''
-            }`}
-          >
-            <div className="text-4xl mb-2">{noise.emoji}</div>
-            <div className="font-heading">{noise.label}</div>
-            {active === noise.id && isPlaying && (
-              <div className="text-xs text-secondary mt-2">Playing...</div>
-            )}
-          </button>
-        ))}
-      </div>
-
-      {active && (
-        <div className="mt-8">
-          <div className={`relative h-32 bg-gradient-to-r ${noiseTypes.find(n => n.id === active)?.color} rounded-card overflow-hidden`}>
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        {episodes.map((episode) => {
+          const isFlipped = flippedCards.has(episode.number)
+          return (
             <div
-              className="absolute inset-0 bg-secondary/50"
-              style={{
-                animation: isPlaying ? 'waveform 2s ease-in-out infinite' : 'none',
-              }}
-            />
-          </div>
-          <div className="text-center mt-4">
-            <button
-              onClick={() => setIsPlaying(!isPlaying)}
-              className="px-6 py-2 bg-secondary text-white rounded-card font-heading hover:scale-105 transition-all duration-300"
+              key={episode.number}
+              className="flip-card-container"
+              onClick={() => handleCardClick(episode.number)}
             >
-              {isPlaying ? '⏸ Pause' : '▶ Play'}
-            </button>
-          </div>
-        </div>
-      )}
+              <div className={`flip-card ${isFlipped ? 'flipped' : ''}`}>
+                <div className="flip-card-front">
+                  <div className="p-6 h-full flex flex-col items-center justify-center bg-white rounded-card shadow-hover">
+                    <div className="text-2xl font-heading text-primary">
+                      Ep {episode.number}
+                    </div>
+                  </div>
+                </div>
+                <div className="flip-card-back">
+                  <div className="p-6 h-full flex flex-col items-center justify-center bg-gradient-to-br from-primary/10 to-secondary/10 rounded-card shadow-hover">
+                    <div className="text-sm font-heading text-neutral text-center leading-tight">
+                      {episode.title}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )
+        })}
+      </div>
     </div>
   )
 }
